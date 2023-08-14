@@ -1,0 +1,19 @@
+NOTICE for Responsive Scaffold
+
+This project includes software components that are subject to the Apache License, Version 2.0.
+
+Portions of this software were originally developed by The Android Open Source Project.
+
+Copyright 2021 The Android Open Source Project
+
+Modifications and enhancements to this software have been made by Stoyan Vuchev and are
+copyrighted in the year 2023. These modifications are licensed under the Apache License, Version 2.0.
+
+For more information about the Apache License, Version 2.0, please refer to the LICENSE file.
+
+Attributions:
+
+- The Android Open Source Project: https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#scaffold
+- Stoyan Vuchev: contact.stoyan.vuchev@gmail.com
+
+This NOTICE file should be included with all distributions of the software.
