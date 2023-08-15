@@ -96,7 +96,7 @@ implementation("com.github.stoyan-vuchev:responsive-scaffold:<version>")
 responsive-scaffold = "<version>"
 
 [libraries]
-squircle-shape = { group = "com.github.stoyan-vuchev", name = "responsive-scaffold", version.ref = "responsive-scaffold" }
+responsive-scaffold = { group = "com.github.stoyan-vuchev", name = "responsive-scaffold", version.ref = "responsive-scaffold" }
 ```
 
 * Then include the dependency in your module `build.gradle.kts` file.
@@ -127,7 +127,7 @@ allprojects {
 
 #### Step 2
 
-* Add the Squircle Shape dependency in your module `build.gradle` file.
+* Add the Responsive Scaffold dependency in your module `build.gradle` file.
 * Latest version: [![](https://jitpack.io/v/stoyan-vuchev/responsive-scaffold.svg)](https://jitpack.io/#stoyan-vuchev/responsive-scaffold)
 
 ```groovy
