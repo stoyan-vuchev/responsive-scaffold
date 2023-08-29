@@ -6,7 +6,7 @@
 
 * [Key Features](#key-features)
 * [Requirements](#requirements)
-* [Usage](#usage)
+* [Implementation](#implementation)
 * [Gradle Kotlin DSL Setup](#gradle-kotlin-dsl-setup)
 * [Gradle Groovy Setup](#gradle-groovy-setup)
 * [Notice](#notice)
@@ -17,10 +17,10 @@
 - ****Side Rail Support:**** The Responsive Scaffold layout is thoughtfully designed to seamlessly incorporate Side Rail content, making it ideal for implementing components like a [NavigationRail](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail) on larger screen devices or compact devices in landscape mode. This creates a natural and efficient user navigation experience.
 
 
-- ****Adaptive Window Sizing:**** Leveraging the capabilities of the [WindowSizeClass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/WindowSizeClass) from the [androidx.compose.material3](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/package-summary) package, the layout dynamically adjusts its hierarchy based on the window width size. It enables the layout to smoothly switch between displaying a Bottom Bar content for compact window width size and displaying a Side Rail content for medium or expanded window width size.
+- ****Adaptive Window Sizing:**** Leveraging the capabilities of the [WindowSizeClass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/WindowSizeClass) from the [androidx.compose.material3.windowsizeclass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/package-summary) package, the layout dynamically adjusts its hierarchy based on the window width size. It enables the layout to smoothly switch between displaying a Bottom Bar content for compact window width size and displaying a Side Rail content for medium or expanded window width size.
 
 
-- Also, when the window width size is medium or expanded, the Floating Action Button content disappears, in that case, the FAB should be included at the upper left of the screen, as stated in the [Material Design FAB guidelines](https://m3.material.io/components/floating-action-button/guidelines#db386471-8faf-4ded-ad55-8fc63ddb6e40). For example by placing it inside the header content of a [NavigationRail](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail) component.
+- When the window width size is medium or expanded, the Floating Action Button content disappears, in that case, the FAB should be included at the upper left of the screen, as stated in the [Material Design FAB guidelines](https://m3.material.io/components/floating-action-button/guidelines#db386471-8faf-4ded-ad55-8fc63ddb6e40). For example by placing it inside the header content of a [NavigationRail](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail) component.
 
 ## Requirements
 
@@ -31,7 +31,66 @@
 - Kotlin version - `1.9.0`
 
 
-## Usage
+## Implementation
+
+Before implementing the Responsive Scaffold, it's recommended (but not necessarily required) to provide a top level `WindowSizeClass` instance,
+simply by wrapping the activity content inside a `ProvideWindowSizeClass` composable for consumption down the composition and to avoid calculating and recreating multiple `WindowSizeClass` instances.
+
+The default `WindowSizeClass` instance provided by the `ProvideWindowSizeClass` composable
+is calculated via a modified `calculateWindowSizeClass()` method,
+which is also used by the Responsive Scaffold to create an instance if not provided.
+
+```kotlin
+@Composable
+fun ProvideWindowSizeClass(
+    windowSizeClass: WindowSizeClass = calculateWindowSizeClass(),
+    content: @Composable () -> Unit
+) = CompositionLocalProvider(
+    LocalWindowSizeClass provides windowSizeClass,
+    content = content
+)
+```
+
+If you don't have a top level `WindowSizeClass` instance, the `ProvideWindowSizeClass` composable will provide it under the hood:
+
+```kotlin
+setContent {
+
+    ProvideWindowSizeClass {
+
+        // The activity UI content
+
+    }
+
+}
+```
+
+If you already have a top level activity `WindowSizeClass` instance, you can pass it as an argument:
+
+```kotlin
+setContent {
+
+    val activityWindowSizeClass = calculateWindowSizeClass(activity = this)
+
+    ProvideWindowSizeClass(
+        windowSizeClass = activityWindowSizeClass
+    ) {
+
+        // The activity UI content
+
+    }
+
+}
+```
+
+Here is an example of how to consume the provided `WindowSizeClass` instance whenever you need it:
+```kotlin
+val windowSizeClass: WindowSizeClass? = LocalWindowSizeClass.current
+```
+
+<br/>
+
+#### Responsive Scaffold Parameters:
 
 * `modifier` - a [Modifier](https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier) to be applied to the scaffold.
 * `topBar` - a top app bar component, typically a [TopAppBar](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#topappbar).
@@ -42,7 +101,8 @@
 * `floatingActionButtonPosition` - position of the FAB on the screen.
 * `containerColor` - a color used for the background of the scaffold.
 * `contentColor` - a preferred color for the content inside the scaffold.
-* `contentWindowInsets` - a window insets to be passed to `contentColor` slot via [PaddingValues](https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues) params.
+* `contentWindowInsets` - a window insets to be passed to the `content` slot via [PaddingValues](https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues) params.
+* `windowSizeClass` - used for under the hood calculations from a [WindowSizeClass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/WindowSizeClass) instance, with a support for optional overriding.
 * `content` - the main content of the screen, e.g. a [LazyColumn](https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#LazyColumn).
 
 <br/>
@@ -146,7 +206,7 @@ This project includes software components that are subject to the Apache License
 
 Portions of this software were originally developed by The Android Open Source Project.
 
-Copyright 2021 The Android Open Source Project
+Copyright 2021-2022 The Android Open Source Project
 
 Modifications and enhancements to this software have been made by Stoyan Vuchev, licensed under the Apache License, Version 2.0.
 

@@ -55,6 +55,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.stoyanvuchev.responsive_scaffold.FabPosition
+import com.stoyanvuchev.responsive_scaffold.ProvideWindowSizeClass
 import com.stoyanvuchev.responsive_scaffold.ResponsiveScaffold
 import com.stoyanvuchev.responsive_scaffold.ResponsiveScaffoldUtils
 import com.stoyanvuchev.responsivescaffold.ui.theme.ResponsiveScaffoldTheme
@@ -70,108 +71,108 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-
             ResponsiveScaffoldTheme {
+                ProvideWindowSizeClass {
 
-                val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-                var selectedItemIndex by remember { mutableIntStateOf(0) }
-                val lazyListState = rememberLazyListState()
-                val snackbarHost = remember { SnackbarHostState() }
-                val scope = rememberCoroutineScope()
+                    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+                    var selectedItemIndex by remember { mutableIntStateOf(0) }
+                    val lazyListState = rememberLazyListState()
+                    val snackbarHost = remember { SnackbarHostState() }
+                    val scope = rememberCoroutineScope()
 
-                val onFabClick = remember<() -> Unit> {
-                    {
-                        scope.launch {
-                            snackbarHost.showSnackbar(
-                                message = "Hello, Responsive Scaffold! " +
-                                        "It's nice to have you by my side! <3"
-                            )
-                        }
-                    }
-                }
-
-                val navItems by lazy {
-                    listOf(
-                        NavItem(
-                            selectedIcon = Icons.Filled.Home,
-                            unselectedIcon = Icons.Outlined.Home,
-                            label = "Home"
-                        ),
-                        NavItem(
-                            selectedIcon = Icons.Filled.Favorite,
-                            unselectedIcon = Icons.Outlined.FavoriteBorder,
-                            label = "Fav"
-                        ),
-                        NavItem(
-                            selectedIcon = Icons.Filled.AccountCircle,
-                            unselectedIcon = Icons.Outlined.AccountCircle,
-                            label = "Profile"
-                        ),
-                    )
-                }
-
-                ResponsiveScaffold(
-                    modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-                    topBar = {
-                        LargeTopAppBar(
-                            title = { Text(text = stringResource(id = R.string.app_name)) },
-                            scrollBehavior = scrollBehavior,
-                            windowInsets = ResponsiveScaffoldUtils.topAppBarWindowInsets()
-                        )
-                    },
-                    bottomBar = {
-                        NavigationBottomBar(
-                            navItems = navItems,
-                            selectedItemIndex = selectedItemIndex,
-                            onSelectedItemIndex = remember { { selectedItemIndex = it } }
-                        )
-                    },
-                    sideRail = {
-                        NavigationSideRail(
-                            navItems = navItems,
-                            selectedItemIndex = selectedItemIndex,
-                            onSelectedItemIndex = remember { { selectedItemIndex = it } },
-                            header = {
-                                FAB(
-                                    onClick = onFabClick,
-                                    elevation = FloatingActionButtonDefaults
-                                        .bottomAppBarFabElevation()
+                    val onFabClick = remember<() -> Unit> {
+                        {
+                            scope.launch {
+                                snackbarHost.showSnackbar(
+                                    message = "Hello, Responsive Scaffold! " +
+                                            "It's nice to have you by my side! <3"
                                 )
                             }
-                        )
-                    },
-                    snackbarHost = { SnackbarHost(hostState = snackbarHost) },
-                    floatingActionButton = {
-                        FAB(
-                            onClick = onFabClick,
-                            elevation = FloatingActionButtonDefaults.elevation()
+                        }
+                    }
+
+                    val navItems by lazy {
+                        listOf(
+                            NavItem(
+                                selectedIcon = Icons.Filled.Home,
+                                unselectedIcon = Icons.Outlined.Home,
+                                label = "Home"
+                            ),
+                            NavItem(
+                                selectedIcon = Icons.Filled.Favorite,
+                                unselectedIcon = Icons.Outlined.FavoriteBorder,
+                                label = "Fav"
+                            ),
+                            NavItem(
+                                selectedIcon = Icons.Filled.AccountCircle,
+                                unselectedIcon = Icons.Outlined.AccountCircle,
+                                label = "Profile"
+                            ),
                         )
                     }
-                ) { paddingValues ->
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 16.dp),
-                        state = lazyListState,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = paddingValues
-                    ) {
-
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
-
-                        items(count = 100, key = { "item_$it" }) { i ->
-                            Text(text = "Item: ${i + 1}")
+                    ResponsiveScaffold(
+                        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                        topBar = {
+                            LargeTopAppBar(
+                                title = { Text(text = stringResource(id = R.string.app_name)) },
+                                scrollBehavior = scrollBehavior,
+                                windowInsets = ResponsiveScaffoldUtils.topAppBarWindowInsets()
+                            )
+                        },
+                        bottomBar = {
+                            NavigationBottomBar(
+                                navItems = navItems,
+                                selectedItemIndex = selectedItemIndex,
+                                onSelectedItemIndex = remember { { selectedItemIndex = it } }
+                            )
+                        },
+                        sideRail = {
+                            NavigationSideRail(
+                                navItems = navItems,
+                                selectedItemIndex = selectedItemIndex,
+                                onSelectedItemIndex = remember { { selectedItemIndex = it } },
+                                header = {
+                                    FAB(
+                                        onClick = onFabClick,
+                                        elevation = FloatingActionButtonDefaults
+                                            .bottomAppBarFabElevation()
+                                    )
+                                }
+                            )
+                        },
+                        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
+                        floatingActionButton = {
+                            FAB(
+                                onClick = onFabClick,
+                                elevation = FloatingActionButtonDefaults.elevation()
+                            )
                         }
+                    ) { paddingValues ->
 
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp),
+                            state = lazyListState,
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            contentPadding = paddingValues
+                        ) {
+
+                            item { Spacer(modifier = Modifier.height(16.dp)) }
+
+                            items(count = 100, key = { "item_$it" }) { i ->
+                                Text(text = "Item: ${i + 1}")
+                            }
+
+                            item { Spacer(modifier = Modifier.height(16.dp)) }
+
+                        }
 
                     }
 
                 }
-
             }
-
         }
     }
 

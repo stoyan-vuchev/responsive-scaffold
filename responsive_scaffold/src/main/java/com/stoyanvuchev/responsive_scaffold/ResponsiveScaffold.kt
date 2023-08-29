@@ -24,7 +24,6 @@
 
 package com.stoyanvuchev.responsive_scaffold
 
-import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -47,18 +46,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.contentColorFor
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Modifier.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.SubcomposeLayout
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.offset
@@ -91,12 +87,12 @@ import androidx.compose.ui.unit.offset
  * params. Scaffold will take the insets into account from the top/bottom/start only if the [topBar]/
  * [bottomBar]/[sideRail] are not present, as the scaffold expect [topBar]/[bottomBar]/[sideRail]
  * to handle insets instead.
+ * @param windowSizeClass used for under the hood calculations from a WindowSizeClass instance, with a support for optional overriding.
  * @param content the main content of the screen, e.g. a [LazyColumn]. The lambda receives a [PaddingValues] that should be
  * applied to the content root via [Modifier.padding] and [Modifier.consumeWindowInsets] to
  * properly offset top / bottom bars and side rail. If using [Modifier.verticalScroll], apply this modifier to
  * the child of the scroll, and not on the scroll itself.
  */
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ResponsiveScaffold(
     modifier: Modifier = Modifier,
@@ -109,13 +105,11 @@ fun ResponsiveScaffold(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = MaterialTheme.colorScheme.contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    content: @Composable (paddingValues: PaddingValues) -> Unit
+    windowSizeClass: WindowSizeClass = LocalWindowSizeClass.current ?: calculateWindowSizeClass(),
+    content: @Composable (PaddingValues) -> Unit
 ) {
 
-    val isCompactWidth by rememberUpdatedState(
-        calculateWindowSizeClass(LocalContext.current as Activity)
-            .isCompactWidth()
-    )
+    val isCompactWidth by rememberUpdatedState(windowSizeClass.isCompactWidth())
 
     Surface(
         modifier = modifier,
@@ -156,7 +150,7 @@ fun ResponsiveScaffold(
 private fun ResponsiveScaffoldLayout(
     fabPosition: FabPosition,
     topBar: @Composable () -> Unit,
-    content: @Composable (paddingValues: PaddingValues) -> Unit,
+    content: @Composable (PaddingValues) -> Unit,
     snackbar: @Composable () -> Unit,
     fab: @Composable () -> Unit,
     contentWindowInsets: WindowInsets,
@@ -331,7 +325,7 @@ private fun ResponsiveScaffoldLayout(
                     } else sideRailWidth.toDp(),
                     end = insets.calculateEndPadding((this@SubcomposeLayout).layoutDirection)
                 )
-                content(paddingValues = innerPadding)
+                content(innerPadding)
             }.map { it.measure(looseConstraints) }
 
             /*

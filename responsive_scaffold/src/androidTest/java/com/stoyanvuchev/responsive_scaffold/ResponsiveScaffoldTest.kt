@@ -53,59 +53,72 @@ class ResponsiveScaffoldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
+            ProvideWindowSizeClass {
 
-            val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-            val snackbarHostState = remember { SnackbarHostState() }
-            val scope = rememberCoroutineScope()
+                val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+                val snackbarHostState = remember { SnackbarHostState() }
+                val scope = rememberCoroutineScope()
 
-            ResponsiveScaffold(
-                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-                topBar = {
-                    TopAppBar(
-                        title = { Text(text = topAppBarTitle) },
-                        scrollBehavior = scrollBehavior,
-                        windowInsets = ResponsiveScaffoldUtils.topAppBarWindowInsets()
-                    )
-                },
-                bottomBar = { NavigationBar(modifier = Modifier.testTag("bottomBar")) {} },
-                sideRail = {
-                    NavigationRail(modifier = Modifier.testTag("sideRail"),
-                        header = {
-                            FloatingActionButton(
-                                modifier = Modifier.testTag("sideRailFAB"),
-                                onClick = {
-                                    scope.launch { snackbarHostState.showSnackbar(message = snackbarMsg) }
+                ResponsiveScaffold(
+                    modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(text = topAppBarTitle) },
+                            scrollBehavior = scrollBehavior,
+                            windowInsets = ResponsiveScaffoldUtils.topAppBarWindowInsets()
+                        )
+                    },
+                    bottomBar = {
+                        NavigationBar(modifier = Modifier.testTag("bottomBar")) {}
+                    },
+                    sideRail = {
+                        NavigationRail(modifier = Modifier.testTag("sideRail"),
+                            header = {
+                                FloatingActionButton(
+                                    modifier = Modifier.testTag("sideRailFAB"),
+                                    onClick = {
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                message = snackbarMsg
+                                            )
+                                        }
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Add,
+                                        contentDescription = "Add"
+                                    )
                                 }
-                            ) {
-                                Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add")
                             }
+                        ) {}
+                    },
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            modifier = Modifier.testTag("floatingActionButton"),
+                            onClick = {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(message = snackbarMsg)
+                                }
+                            }
+                        ) {
+                            Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add")
                         }
-                    ) {}
-                },
-                snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-                floatingActionButton = {
-                    FloatingActionButton(
-                        modifier = Modifier.testTag("floatingActionButton"),
-                        onClick = {
-                            scope.launch { snackbarHostState.showSnackbar(message = snackbarMsg) }
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Rounded.Add, contentDescription = "Add")
                     }
-                }
-            ) { paddingValues ->
+                ) { paddingValues ->
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    contentPadding = paddingValues,
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    content = { items(100) { Text(text = "Item: $it") } }
-                )
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        contentPadding = paddingValues,
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        content = { items(100) { Text(text = "Item: $it") } }
+                    )
+
+                }
 
             }
-
         }
     }
 
