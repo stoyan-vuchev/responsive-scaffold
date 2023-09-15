@@ -2,19 +2,19 @@
 
 # Gradle Plugin & Kotlin
 agp = "8.1.1"
-org-jetbrains-kotlin-android = "1.9.0"
+org-jetbrains-kotlin-android = "1.9.10"
 
 # Core Dependencies
 appcompat = "1.6.1"
-core-ktx = "1.10.1"
-lifecycle-runtime-ktx = "2.6.1"
+core-ktx = "1.12.0"
+lifecycle-runtime-ktx = "2.6.2"
 material = "1.9.0"
 
 # Jetpack Compose
 activity-compose = "1.7.2"
-compose-bom = "2023.08.00"
-compose-compiler = "1.5.1"
-lifecycle-runtime-compose = "2.6.1"
+compose-bom = "2023.09.00"
+compose-compiler = "1.5.3"
+lifecycle-runtime-compose = "2.6.2"
 
 # Testing
 androidx-test-ext-junit = "1.1.5"
