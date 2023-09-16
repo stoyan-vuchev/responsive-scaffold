@@ -1,4 +1,8 @@
-# Responsive Scaffold [![](https://jitpack.io/v/stoyan-vuchev/responsive-scaffold.svg)](https://jitpack.io/#stoyan-vuchev/responsive-scaffold)
+# Responsive Scaffold
+[![](https://jitpack.io/v/stoyan-vuchev/responsive-scaffold.svg)](https://jitpack.io/#stoyan-vuchev/responsive-scaffold)
+[![API](https://img.shields.io/badge/API-23%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=23)
+<a href="https://github.com/stoyan-vuchev/responsive-scaffold/commits/master"><img src="https://img.shields.io/github/last-commit/stoyan-vuchev/responsive-scaffold.svg?style=flat&logo=github&logoColor=white" alt="GitHub last commit"></a>
+<a href="https://github.com/stoyan-vuchev/responsive-scaffold/issues"><img src="https://img.shields.io/github/issues-raw/stoyan-vuchev/responsive-scaffold.svg?style=flat&logo=github&logoColor=white" alt="GitHub issues"></a>
 
 > A modified [Scaffold](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#scaffold) layout from the [androidx.compose.material3](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary) package with a support for Side Rail content.
 
