@@ -6,6 +6,8 @@
 
 > A modified [Scaffold](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#scaffold) layout from the [androidx.compose.material3](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary) package with a support for Side Rail content.
 
+---
+
 ## Table of Contents
 
 * [Key Features](#key-features)
@@ -15,6 +17,8 @@
 * [Gradle Groovy Setup](#gradle-groovy-setup)
 * [Notice](#notice)
 * [License](#license)
+
+---
 
 ## Key Features
 
@@ -26,14 +30,15 @@
 
 - When the window width size is medium or expanded, the Floating Action Button content disappears, in that case, the FAB should be included at the upper left of the screen, as stated in the [Material Design FAB guidelines](https://m3.material.io/components/floating-action-button/guidelines#db386471-8faf-4ded-ad55-8fc63ddb6e40). For example by placing it inside the header content of a [NavigationRail](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail) component.
 
+---
+
 ## Requirements
 
 - Project minSdk version - `23`
 - Project compileSdk version - `34`
-- Jetpack Compose version - `1.5.1`
-- Jetpack Compose Compiler version - `1.5.3`
-- Kotlin version - `1.9.10`
+- Jetpack Compose version - `1.5.4`
 
+---
 
 ## Implementation
 
@@ -132,6 +137,8 @@ ResponsiveScaffold(
 ```
 <br/>
 
+---
+
 ## Gradle Kotlin DSL Setup
 
 #### Step 1
@@ -153,7 +160,7 @@ repositories {
 implementation("com.github.stoyan-vuchev:responsive-scaffold:<version>")
 ```
 
-* Or if you're using a `libs.versions.toml` catalog, declare it there.
+* Or if you're using a `libs.versions.toml` catalog, declare it in the catalog instead.
 
 ```toml
 [versions]
@@ -173,7 +180,7 @@ implementation(libs.responsive.scaffold)
 
 * Sync and rebuild the project.
 
-<br/>
+---
 
 ## Gradle Groovy Setup
 
@@ -202,7 +209,7 @@ implementation 'com.github.stoyan-vuchev:responsive-scaffold:<version>'
 
 * Sync and rebuild the project.
 
-<br/>
+---
 
 ## Notice
 
@@ -220,6 +227,8 @@ Attributions:
 
 - The Android Open Source Project: https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#scaffold
 - Stoyan Vuchev: [contact.stoyan.vuchev@gmail.com](mailto://contact.stoyan.vuchev@gmail.com)
+
+---
 
 ## License
 
