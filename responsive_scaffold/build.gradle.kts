@@ -58,7 +58,7 @@ afterEvaluate {
 
                 groupId = "com.github.stoyan-vuchev"
                 artifactId = "responsive-scaffold"
-                version = "1.0.2"
+                version = "1.0.4"
 
                 afterEvaluate {
                     from(components["release"])
