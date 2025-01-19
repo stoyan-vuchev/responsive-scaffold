@@ -11,7 +11,6 @@
 ## Table of Contents
 
 * [Key Features](#key-features)
-* [Requirements](#requirements)
 * [Implementation](#implementation)
 * [Gradle Kotlin DSL Setup](#gradle-kotlin-dsl-setup)
 * [Gradle Groovy Setup](#gradle-groovy-setup)
@@ -29,14 +28,6 @@
 
 
 - When the window width size is medium or expanded, the Floating Action Button content disappears, in that case, the FAB should be included at the upper left of the screen, as stated in the [Material Design FAB guidelines](https://m3.material.io/components/floating-action-button/guidelines#db386471-8faf-4ded-ad55-8fc63ddb6e40). For example by placing it inside the header content of a [NavigationRail](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationrail) component.
-
----
-
-## Requirements
-
-- Project minSdk version - `23`
-- Project compileSdk version - `34`
-- Jetpack Compose version - `1.5.4`
 
 ---
 

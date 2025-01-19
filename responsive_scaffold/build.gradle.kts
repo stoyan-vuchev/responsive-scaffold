@@ -1,14 +1,14 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.org.jetbrains.kotlin.compose)
     `maven-publish`
 }
 
 android {
 
     namespace = "com.stoyanvuchev.responsive_scaffold"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 23
@@ -39,10 +39,6 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -58,7 +54,7 @@ afterEvaluate {
 
                 groupId = "com.github.stoyan-vuchev"
                 artifactId = "responsive-scaffold"
-                version = "1.0.4"
+                version = "1.0.5"
 
                 afterEvaluate {
                     from(components["release"])
